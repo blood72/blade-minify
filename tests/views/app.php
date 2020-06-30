@@ -80,4 +80,3 @@
     </div>
 </body>
 </html>
-<?php /**PATH ~/resources/views/layouts/app.blade.php ENDPATH**/ ?>
