@@ -23,4 +23,17 @@ abstract class TestCase extends BaseTestCase
             'jsMinifier' => [JSMinifier::class, 'minify'],
         ];
     }
+
+    /**
+     * @param string $file
+     * @param string $extension
+     * @return array
+     */
+    protected function loadTestFiles($file, $extension)
+    {
+        $actual = file_get_contents(self::$path . "/$file.$extension");
+        $expected = file_get_contents(self::$path . "/$file.min.$extension");
+
+        return [$actual, $expected];
+    }
 }
