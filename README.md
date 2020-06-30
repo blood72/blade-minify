@@ -52,20 +52,7 @@ composer require blood72/blade-minify
 
 ## Example
 
-```html
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-```
-
-```html
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-```
-
-You can compare test files [original](./tests/views/register.html) with [minified](./tests/views/register.min.html).  
-see more [examples](./tests/views) 
+You can compare test files. see more [examples](./tests/views). 
 
 ## Reference
 
