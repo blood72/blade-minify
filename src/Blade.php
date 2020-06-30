@@ -95,7 +95,7 @@ class Blade extends HTMLMinifier
         );
 
         // trim each line
-        $this->_html = preg_replace('/\\s+/iu', ' ', $this->_html);
+        $this->_html = preg_replace('/\\s+/u', ' ', $this->_html);
 
         // trim string in inline tags
         $this->_html = preg_replace('/>\\s?([^<]\\S+)\\s?<\\//iu', '>$1</', $this->_html);
@@ -106,6 +106,14 @@ class Blade extends HTMLMinifier
         // remove ws outside of all elements
         $this->_html = preg_replace('/>(?:\\s(?:\\s*))?([^<]+)(?:\\s(?:\\s*))?</u', '>$1<', $this->_html);
 
+        // remove ws outside of block/undisplayed elements with placeholders
+        $this->_html = preg_replace(
+            '/(<\\/?(?:' . self::BLOCK_TAGS_REGEX . ')\\b[^>]*>)(?:\\s(?:\\s*))?'
+            . '(%' . $this->_replacementHash . '[0-9]+%)(?:\\s(?:\\s*))?/iu',
+            '$1$2',
+            $this->_html
+        );
+
         // remove ws between block and inline tags
         $this->_html = preg_replace(
             '/(<\\/?(?:' . self::BLOCK_TAGS_REGEX . ')\\b[^>]*>)'
@@ -114,7 +122,7 @@ class Blade extends HTMLMinifier
             $this->_html
         );
 
-        // remove ws closing inline tags
+        // remove ws closing adjacent inline tags (ex. </span></label>)
         $this->_html = preg_replace(
             '/(<\\/(?:' . self::INLINE_TAGS_REGEX . ')>)'
             . '\\s+(<\\/(?:' . self::INLINE_TAGS_REGEX . ')>)/iu',
