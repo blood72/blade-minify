@@ -47,7 +47,7 @@ class Blade extends HTMLMinifier
 
         // replace PHPs with placeholders
         $this->_html = preg_replace_callback(
-            '/<\?php(\\b[^?>]*?[\\s\\S]*?\?>)\\s*/iu',
+            '/<\?php(\\b[^?>]*?[\\s\\S]*?\?>)/iu',
             [$this, '_removePhpCB'],
             $this->_html
         );
@@ -75,21 +75,21 @@ class Blade extends HTMLMinifier
 
         // replace PREs with placeholders
         $this->_html = preg_replace_callback(
-            '/\\s*<pre(\\b[^>]*?>[\\s\\S]*?<\\/pre>)\\s*/iu',
+            '/<pre(\\b[^>]*?>[\\s\\S]*?<\\/pre>)/iu',
             [$this, '_removePreCB'],
             $this->_html
         );
 
         // replace TEXTAREAs with placeholders
         $this->_html = preg_replace_callback(
-            '/\\s*<textarea(\\b[^>]*?>[\\s\\S]*?<\\/textarea>)\\s*/iu',
+            '/<textarea(\\b[^>]*?>[\\s\\S]*?<\\/textarea>)/iu',
             [$this, '_removeTextareaCB'],
             $this->_html
         );
 
         // replace CODEs with placeholders
         $this->_html = preg_replace_callback(
-            '/\\s*<code(\\b[^>]*?>[\\s\\S]*?<\\/code>)\\s*/iu',
+            '/<code(\\b[^>]*?>[\\s\\S]*?<\\/code>)/iu',
             [$this, '_removeCodeCB'],
             $this->_html
         );
