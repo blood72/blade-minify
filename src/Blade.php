@@ -98,13 +98,26 @@ class Blade extends HTMLMinifier
         $this->_html = preg_replace('/\\s+/u', ' ', $this->_html);
 
         // trim string in inline tags
-        $this->_html = preg_replace('/>\\s?([^<]\\S+)\\s?<\\//iu', '>$1</', $this->_html);
+        $this->_html = preg_replace(
+            '/>\\s?([^<]|(?!%' . $this->_replacementHash . '[0-9]+%)\\S+)\\s?<\\//iu',
+            '>$1</',
+            $this->_html
+        );
 
         // remove ws around block/undisplayed elements
         $this->_html = preg_replace('/\\s+(<\\/?(?:' . self::BLOCK_TAGS_REGEX . ')\\b[^>]*>)/iu', '$1', $this->_html);
 
-        // remove ws outside of all elements
-        $this->_html = preg_replace('/>(?:\\s(?:\\s*))?([^<]+)(?:\\s(?:\\s*))?</u', '>$1<', $this->_html);
+        // remove ws before and after a single string in tags
+        $this->_html = preg_replace(
+            '/<([a-zA-Z](?:[a-zA-Z-]+)?)([^>]+)?>\\s([^\\s](?:[^<]+)?)<\\/\\1>/iu',
+            '<$1$2>$3</$1>',
+            $this->_html
+        );
+        $this->_html = preg_replace(
+            '/<([a-zA-Z](?:[a-zA-Z-]+)?)([^>]+)?>((?:[^<]+[^\\s])?)\\s<\\/\\1>/iu',
+            '<$1$2>$3</$1>',
+            $this->_html
+        );
 
         // remove ws outside of block/undisplayed elements with placeholders
         $this->_html = preg_replace(
@@ -119,6 +132,14 @@ class Blade extends HTMLMinifier
             '/(<\\/?(?:' . self::BLOCK_TAGS_REGEX . ')\\b[^>]*>)'
             . '\\s+(<\\/?(?:' . self::INLINE_TAGS_REGEX . ')\\b[^>]*>)/iu',
             '$1$2',
+            $this->_html
+        );
+
+        // remove ws at the front of opening inline tags (ex. <a>hello <span>world)
+        $this->_html = preg_replace(
+            '/(<(?:' . self::INLINE_TAGS_REGEX . ')\\b[^>]*>)'
+            . '\\s([^\\s][^<]+[\\s]?)?(<(?:' . self::INLINE_TAGS_REGEX . ')\\b[^>]*>)/iu',
+            '$1$2$3',
             $this->_html
         );
 
