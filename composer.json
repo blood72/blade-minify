@@ -20,7 +20,7 @@
         "mrclay/minify": "This is the parent project of this unofficial package."
     },
     "require": {
-        "php": "^7.1",
+        "php": ">=7.1",
         "mrclay/minify": "^3.0"
     },
     "require-dev": {

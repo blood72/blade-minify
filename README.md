@@ -16,7 +16,7 @@ This is specialized minification in the compiled .php by the Laravel Blade Compi
 
 ## Requirement
 
-- PHP >= 7.2
+- PHP >= 7.1
 - mrclay/minify ^3.0
 
 ## Installation
