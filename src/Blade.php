@@ -87,6 +87,13 @@ class Blade extends HTMLMinifier
             $this->_html
         );
 
+        // replace NOSCRIPTs with placeholders
+        $this->_html = preg_replace_callback(
+            '/<noscript(\\b[^>]*?>[\\s\\S]*?<\\/noscript>)/iu',
+            [$this, '_removeNoscriptCB'],
+            $this->_html
+        );
+
         // replace CODEs with placeholders
         $this->_html = preg_replace_callback(
             '/<code(\\b[^>]*?>[\\s\\S]*?<\\/code>)/iu',
@@ -183,5 +190,14 @@ class Blade extends HTMLMinifier
     protected function _removeCodeCB($m)
     {
         return $this->_reservePlace("<code{$m[1]}");
+    }
+
+    /**
+     * @param $m
+     * @return string
+     */
+    protected function _removeNoscriptCB($m)
+    {
+        return $this->_reservePlace("<noscript{$m[1]}");
     }
 }
