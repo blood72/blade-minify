@@ -34,7 +34,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Blood72\\Minify\\Test\\": "tests/"
+            "Blood72\\Minify\\Tests\\": "tests/"
         }
     },
     "scripts": {

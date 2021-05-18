@@ -1,40 +1,34 @@
 <?php
 
-namespace Blood72\Minify\Test;
+namespace Blood72\Minify\Tests;
 
 use Blood72\Minify\Blade;
 
 class MinifyTest extends TestCase
 {
-    /** @test */
-    public function it_is_possible_to_minify_compiled_blade_file_that_is_standalone()
+    /**
+     * @param string $file
+     * @param string $extension
+     * @test
+     * @dataProvider minificationProvider
+     */
+    public function possible_to_minify($file, $extension)
     {
-        [$actual, $expected] = $this->loadTestFiles('app', 'php');
+        [$actual, $expected] = $this->loadTestFiles($file, $extension);
 
         $this->assertEquals($expected, Blade::minify($actual, $this->options));
     }
 
-    /** @test */
-    public function it_is_possible_to_minify_compiled_blade_file_that_is_extended()
+    /**
+     * @return array
+     */
+    public function minificationProvider()
     {
-        [$actual, $expected] = $this->loadTestFiles('register', 'php');
-
-        $this->assertEquals($expected, Blade::minify($actual, $this->options));
-    }
-
-    /** @test */
-    public function it_is_also_possible_to_minify_html_that_rendered_in_actual_html()
-    {
-        [$actual, $expected] = $this->loadTestFiles('register', 'html');
-
-        $this->assertEquals($expected, Blade::minify($actual, $this->options));
-    }
-
-    /** @test */
-    public function it_is_also_possible_to_minify_html_that_contains_style_tag()
-    {
-        [$actual, $expected] = $this->loadTestFiles('welcome', 'html');
-
-        $this->assertEquals($expected, Blade::minify($actual, $this->options));
+        return [
+            ['app', 'php'],
+            ['register', 'php'],
+            ['register', 'html'],
+            ['welcome', 'html'],
+        ];
     }
 }

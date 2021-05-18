@@ -1,9 +1,9 @@
 <?php
 
-namespace Blood72\Minify\Test;
+namespace Blood72\Minify\Tests;
 
 use JSMin\JSMin as JSMinifier;
-use Minify_CSSmin as CSSMinfier;
+use Minify_CSSmin as CSSMinifier;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
@@ -19,7 +19,7 @@ abstract class TestCase extends BaseTestCase
     protected function setUp(): void
     {
         $this->options = [
-            'cssMinifier' => [CSSMinfier::class, 'minify'],
+            'cssMinifier' => [CSSMinifier::class, 'minify'],
             'jsMinifier' => [JSMinifier::class, 'minify'],
         ];
     }
