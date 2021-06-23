@@ -171,7 +171,7 @@ class Blade extends HTMLMinifier
             $this->_html
         );
 
-        // remove ws between closing adjacent blocks
+        // remove ws between closing adjacent PHP blocks
         do {
             $this->_html = preg_replace(
                 '/<\?php\\s(?(?=echo)([^?>].*\?>)\\s(<\?php\\s[^echo][^?>].*\?>)|([^?>].*\?>)\\s(<\?php\\b[^?>].*\?>))/iu',
