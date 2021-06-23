@@ -129,7 +129,7 @@ class Blade extends HTMLMinifier
         // remove ws outside of block/undisplayed elements with placeholders
         $this->_html = preg_replace(
             '/(<\\/?(?:' . self::BLOCK_TAGS_REGEX . ')\\b[^>]*>)(?:\\s(?:\\s*))?'
-            . '(%' . $this->_replacementHash . '[0-9]+%)(?:\\s(?:\\s*))?/iu',
+            . '(%' . $this->_replacementHash . '[0-9]+%)/iu',
             '$1$2',
             $this->_html
         );
@@ -170,6 +170,17 @@ class Blade extends HTMLMinifier
             array_values(array_map('trim', $this->_placeholders)),
             $this->_html
         );
+
+        // remove ws between closing adjacent blocks
+        do {
+            $this->_html = preg_replace(
+                '/<\?php\\s(?(?=echo)([^?>].*\?>)\\s(<\?php\\s[^echo][^?>].*\?>)|([^?>].*\?>)\\s(<\?php\\b[^?>].*\?>))/iu',
+                '<?php' . ' $1$2$3$4',
+                $this->_html,
+                -1,
+                $count
+            );
+        } while ($count);
 
         return $this->_html;
     }
